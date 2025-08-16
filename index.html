@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Krishna Janmashtami</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom right, #420431, #d5ec06);
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            overflow-x: hidden;
+            text-align: center;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/Krishna Makhan Matki Png on pnghq_com (1).jpg') no-repeat center/cover;
+            opacity: 0.50;
+            z-index: -1;
+        }
+        /* GeeksforGeeks logo styling */
+        
+        .gfg-logo {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            width: 200px;
+            height: auto;
+            cursor: pointer;
+            z-index: 1500;
+            transition: transform 0.50s ease;
+            opacity: 1;
+            /* full visibility */
+        }
+        /* Mobile screen ke liye adjustment */
+        
+        @media (max-width: 768px) {
+            .gfg-logo {
+                width: 120px;
+                /* chhota logo mobile pe */
+                top: 5px;
+                left: 5px;
+            }
+        }
+        
+        .gfg-logo:hover {
+            transform: scale(1.1);
+        }
+        
+        h1 {
+            font-size: 3em;
+            color: #f9fdf9;
+            margin-top: 20px;
+            animation: popIn 2s ease-in-out, glow 2s infinite alternate;
+        }
+        
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px gold, 0 0 20px orange;
+            }
+            to {
+                text-shadow: 0 0 20px red, 0 0 40px yellow;
+            }
+        }
+        
+        .door-container {
+            position: relative;
+            width: 300px;
+            height: 400px;
+            margin: 40px auto;
+            perspective: 1000px;
+        }
+        
+        .door {
+            width: 150px;
+            height: 450px;
+            position: absolute;
+            top: 0;
+            background-image: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            border: 3px solid gold;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            transition: transform 1s ease-in-out;
+            z-index: 2;
+        }
+        
+        .left-door {
+            left: 0;
+            transform-origin: left;
+        }
+        
+        .right-door {
+            right: 0;
+            transform-origin: right;
+        }
+        
+        .open .left-door {
+            transform: rotateY(-100deg);
+        }
+        
+        .open .right-door {
+            transform: rotateY(100deg);
+        }
+        
+        .image-inside {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 300px;
+            height: 400px;
+            z-index: 1;
+        }
+        
+        .image-inside img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 0 25px gold;
+        }
+        
+        .btn {
+            margin: 20px auto;
+            padding: 15px 30px;
+            background: #ff4081;
+            color: white;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn:hover {
+            background: #e91e63;
+        }
+        
+        .footer {
+            color: white;
+            margin-top: 30px;
+            text-shadow: 1px 1px 4px #000;
+        }
+        
+        .firecracker {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: explode 10s linear infinite;
+        }
+        
+        @keyframes explode {
+            0% {
+                transform: scale(0.5);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- GeeksforGeeks Logo -->
+    <a href="https://gfgcdn.com/tu/VU9/" target="_blank">
+        <img class="gfg-logo" src="gfg_logo-removebg-preview.png" alt="GeeksforGeeks Logo">
+    </a>
+
+    <h1 class="animated-title">
+        🎉 Happy Krishna Janmashtami 🎉<br>From 💚GeeksforGeeks💚 Community
+    </h1>
+
+    <div class="door-container" id="doorContainer">
+        <div class="image-inside" id="imageContainer">
+            <img src="/Krishna.jpg" alt="Happy Janmashtami" />
+        </div>
+        <div class="door left-door"></div>
+        <div class="door right-door"></div>
+    </div>
+
+    <button class="btn" onclick="toggleDoors()">✨ Open Doors</button>
+    <button class="btn" onclick="toggleDoors()">✨ Close Doors</button>
+
+    <div class="footer">Made with ❤️ by 💚GeeksforGeeks💚 Community</div>
+
+    <audio id="krishnaMusic" src="/Jo Hai Albela Mad Naino Wala-Downringtone.com.mp3"></audio>
+
+    <script>
+        const container = document.getElementById('doorContainer');
+        const music = document.getElementById('krishnaMusic');
+        let isOpen = false;
+
+        function toggleDoors() {
+            isOpen = !isOpen;
+            container.classList.toggle('open');
+
+            if (isOpen) {
+
+                playFireworks();
+                music.play();
+            } else {
+                // When closing doors
+                music.pause();
+                music.currentTime = 0;
+                // Open your desired website after doors close animation
+                setTimeout(() => {
+                    window.open("https://gfgcdn.com/tu/VU9/", "_blank");
+                }, 1000);
+            }
+        }
+
+        function playFireworks() {
+            for (let i = 0; i < 30; i++) {
+                const firecracker = document.createElement('div');
+                firecracker.classList.add('firecracker');
+                firecracker.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                firecracker.style.left = `${Math.random() * window.innerWidth}px`;
+                firecracker.style.top = `${Math.random() * window.innerHeight}px`;
+                firecracker.style.animationDuration = `${Math.random() + 0.5}s`;
+                document.body.appendChild(firecracker);
+
+                setTimeout(() => {
+                    firecracker.remove();
+                }, 1000);
+            }
+        }
+    </script>
+
+</body>
+
+</html>
